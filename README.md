@@ -1,2 +1,2 @@
-# zadaniePiISB
-zadanie na studia
+# zadaniePiISB - Projektowanie i impementacja systemów bazodanowych 
+Zadanie na studia z django
