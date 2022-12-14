@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Baza Filmowa</title>
+</head>
+<body>
+Tu powinni byc filmy
+
+    {% for f in filmy %}
+
+    <p><a href="filmy/{{ f.id }}">{{ f.nazwa}}</a></p>
+    <h1>{{ akt.nazwa }}</h1>
+
+    {% endfor %}
+</body>
+</html>
+

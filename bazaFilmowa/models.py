@@ -1,7 +1,4 @@
 from django.db import models
-from numpy import mean
-
-# Create your models here.
 
 class Aktor(models.Model):
     imie=models.CharField(max_length=45)
@@ -28,7 +25,8 @@ class Rezyser(models.Model):
 
 class Film(models.Model):
     nazwa=models.CharField(max_length=45)
-    opis=models.TextField()
+    opis = models.TextField()
+    slug=models.SlugField(max_length=45, default='film')
     premiera=models.DateField('premiera')
     rezyser=models.ForeignKey(Rezyser, on_delete=models.CASCADE)
     aktorzy=models.ManyToManyField(Aktor)
@@ -51,7 +49,7 @@ class Ocena(models.Model):
     user = models.TextField()
     film = models.ForeignKey(Film, on_delete=models.CASCADE)
     wartosc=models.IntegerField(choices=OCENY.choices)
-
+    created_data=models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = u'Ocena'

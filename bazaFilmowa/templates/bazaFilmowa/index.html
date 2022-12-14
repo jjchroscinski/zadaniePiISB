@@ -1,0 +1,24 @@
+
+{% extends ".\base_template.html" %}
+
+{% block content %}
+    </div>    <div>
+   {% for a in aktorzy %}
+
+    <h1>{{  a.nazwsiko  }}</h1>
+
+    {% endfor %}
+    </div>
+<div>
+    Tu powinni byc filmy
+
+    {% for f in filmy %}
+
+    <p><a href="filmy/{{ f.id }}">{{ f.nazwa}}</a></p>
+    <h1>{{ f.nazwa }}</h1>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends ".\base_template.html" %}
+
+{% block title %}
+Filmy
+{% endblock %}
+
+
+
+{% block content %}
+    </div>    <div>
+   {% for a in filmy %}
+
+    <h1>{{  a.nazwa  }}</h1>
+    <h3>{{  a.rezyser  }}</h3>
+    <h3>{{  a.premiera  }}</h3>
+    <p>{{  a.opis  }}</p>
+        {% for ak in filmy.aktorzy %}
+        ak.nazwisko
+
+        {% endfor %}
+    {% endfor %}
+    </div>
+<div>
+{% endblock %}

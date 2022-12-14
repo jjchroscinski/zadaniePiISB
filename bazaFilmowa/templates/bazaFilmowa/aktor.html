@@ -1,0 +1,28 @@
+{% extends ".\base_template.html" %}
+
+{% block title %}
+Aktor - informacje
+{% endblock %}
+
+
+{% block content %}
+    </div>    <div>
+   {% if aktor %}
+
+    <h1>{{ aktor.imie }}</h1>
+    <h1>{{ aktor.nazwsiko }}</h1>
+    {% else %}
+Brak aktora
+    {% endif %}
+    </div>
+<div>
+    {% for a in aktorzy %}
+
+    <h1><a href="../{{ a.id }}">{{  a.nazwsiko  }}</a></h1>
+
+
+    {% endfor %}
+
+</div>
+<div>
+{% endblock %}
