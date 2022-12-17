@@ -6,14 +6,14 @@ from .models import Aktor, Rezyser, Film, Ocena
 
 @admin.register(Aktor)
 class AktorAdmin(admin.ModelAdmin):
-    list_display = ['nazwsiko', 'imie' ]
+    list_display = ['nazwisko', 'imie' ]
 
     def __str__(self):
         return f'ID: {self.id}'
 
 @admin.register(Rezyser)
 class RezyserAdmin(admin.ModelAdmin):
-    list_display = ['nazwsiko', 'imie' ]
+    list_display = ['nazwisko', 'imie' ]
 
     def __str__(self):
         return f'ID: {self.id}'
@@ -27,7 +27,7 @@ class OcenaAdmin(admin.ModelAdmin):
 
 @admin.register(Film)
 class FilmAdmin(admin.ModelAdmin):
-    list_display = ['nazwa', 'rezyser','premiera']
+    list_display = ['nazwa']
 
     def __str__(self):
         return f'ID: {self.id}'

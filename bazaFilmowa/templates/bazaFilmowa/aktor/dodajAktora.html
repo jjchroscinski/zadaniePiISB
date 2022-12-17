@@ -1,0 +1,15 @@
+{% extends ".\base\base_template.html" %}
+
+{% block content %}
+Dodawanie aktora
+<form action=" " method="post">
+    {{ form.as_p}}
+    {% csrf_token %}
+    <input type="submit" value="dawaj dawaj">
+
+
+</form>
+
+
+
+{% endblock %}

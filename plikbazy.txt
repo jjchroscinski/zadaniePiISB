@@ -1,0 +1,36 @@
+BEGIN;
+--
+-- Create model Aktor
+--
+CREATE TABLE "bazaFilmowa_aktor" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "imie" varchar(45) NOT NULL, "nazwisko" varchar(45) NOT NULL);
+--
+-- Create model Film
+--
+CREATE TABLE "bazaFilmowa_film" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "nazwa" varchar(45) NOT NULL, "opis" text NOT NULL, "slug" varchar(45) NULL, "created" datetime NOT NULL, "updated" datetime NOT NULL);
+CREATE TABLE "bazaFilmowa_film_aktorzy" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "film_id" bigint NOT NULL REFERENCES "bazaFilmowa_film" ("id") DEFERRABLE INITIALLY DEFERRED, "aktor_id" bigint NOT NULL REFERENCES "bazaFilmowa_aktor" ("id") DEFERRABLE INITIALLY DEFERRED);
+--
+-- Create model Rezyser
+--
+CREATE TABLE "bazaFilmowa_rezyser" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "imie" varchar(45) NOT NULL, "nazwisko" varchar(45) NOT NULL);
+--
+-- Create model Ocena
+--
+CREATE TABLE "bazaFilmowa_ocena" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "wartosc" integer NOT NULL, "film_id" bigint NOT NULL REFERENCES "bazaFilmowa_film" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED);
+--
+-- Add field rezyser to film
+--
+CREATE TABLE "new__bazaFilmowa_film" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "nazwa" varchar(45) NOT NULL, "opis" text NOT NULL, "slug" varchar(45) NULL, "created" datetime NOT NULL, "updated" datetime NOT NULL);
+CREATE TABLE "bazaFilmowa_film_rezyser" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "film_id" bigint NOT NULL REFERENCES "bazaFilmowa_film" ("id") DEFERRABLE INITIALLY DEFERRED, "rezyser_id" bigint NOT NULL REFERENCES "bazaFilmowa_rezyser" ("id") DEFERRABLE INITIALLY DEFERRED);
+INSERT INTO "new__bazaFilmowa_film" ("id", "nazwa", "opis", "slug", "created", "updated") SELECT "id", "nazwa", "opis", "slug", "created", "updated" FROM "bazaFilmowa_film";
+DROP TABLE "bazaFilmowa_film";
+ALTER TABLE "new__bazaFilmowa_film" RENAME TO "bazaFilmowa_film";
+CREATE UNIQUE INDEX "bazaFilmowa_film_aktorzy_film_id_aktor_id_e080fe08_uniq" ON "bazaFilmowa_film_aktorzy" ("film_id", "aktor_id");
+CREATE INDEX "bazaFilmowa_film_aktorzy_film_id_4967a506" ON "bazaFilmowa_film_aktorzy" ("film_id");
+CREATE INDEX "bazaFilmowa_film_aktorzy_aktor_id_7be44efc" ON "bazaFilmowa_film_aktorzy" ("aktor_id");
+CREATE INDEX "bazaFilmowa_ocena_film_id_ffd36f44" ON "bazaFilmowa_ocena" ("film_id");
+CREATE INDEX "bazaFilmowa_ocena_user_id_9b104214" ON "bazaFilmowa_ocena" ("user_id");
+CREATE INDEX "bazaFilmowa_film_slug_128d2417" ON "bazaFilmowa_film" ("slug");
+CREATE UNIQUE INDEX "bazaFilmowa_film_rezyser_film_id_rezyser_id_2bb4df0b_uniq" ON "bazaFilmowa_film_rezyser" ("film_id", "rezyser_id");
+CREATE INDEX "bazaFilmowa_film_rezyser_film_id_9c1d6157" ON "bazaFilmowa_film_rezyser" ("film_id");
+CREATE INDEX "bazaFilmowa_film_rezyser_rezyser_id_5b803f13" ON "bazaFilmowa_film_rezyser" ("rezyser_id");
+COMMIT;
