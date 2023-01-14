@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
+
 class Aktor(models.Model):
     imie=models.CharField(max_length=45)
     nazwisko=models.CharField(max_length=45)
@@ -25,7 +26,7 @@ class Rezyser(models.Model):
 
 class Film(models.Model):
     nazwa=models.CharField(max_length=45)
-    opis = models.TextField()
+    opis = models.TextField(max_length=255)
     slug=models.SlugField(max_length=45, blank=True, null=True)
     created=models.DateTimeField(auto_now_add = True)
     updated=models.DateTimeField(auto_now = True)
@@ -37,6 +38,7 @@ class Film(models.Model):
 
     def __str__(self):
         return self.nazwa
+
 
 
 class Ocena(models.Model):
@@ -54,3 +56,6 @@ class Ocena(models.Model):
     class Meta:
         verbose_name_plural = u'Oceny'
         unique_together=[['user', 'film']]
+
+    def __str__(self):
+        return f'ID: {self.id}'

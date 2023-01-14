@@ -19,6 +19,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'bazaFilmowa',
     'django.contrib.admin',
     'django.contrib.auth',
