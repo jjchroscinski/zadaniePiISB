@@ -5,22 +5,12 @@ from rest_framework import serializers
 class AktorSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model=Aktor
-        fields=[
-            'imie',
-            'nazwisko'
-        ]
-
-    def create(self, validated_data):
-
-        return Snippet.objects.create(**validated_data)
+        fields='__all__'
 
 class RezyserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model=Rezyser
-        fields=[
-            'imie',
-            'nazwisko'
-        ]
+        fields='__all__'
 
 class FilmSerializer(serializers.HyperlinkedModelSerializer):
     iloscOcen=serializers.SerializerMethodField()
@@ -28,30 +18,23 @@ class FilmSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model=Film
-        fields=[
-            'nazwa',
-            'opis',
-            'slug',
-            'created',
-            'updated',
-            'rezyser',
-            'aktorzy',
-            'srednia',
-            'iloscOcen'
-        ]
-        ordering = ['iloscOcen']
+        fields='__all__'
+
     def get_iloscOcen(self, obj):
         a = Ocena.objects.filter(film=obj.id)
 
         return len(a)
 
     def get_srednia(self, obj):
-        a = Ocena.objects.filter(film=obj.id)
-        suma=0
-       # for i in  range(len(a)):
-        #    suma=suma+a[i]['wartosc']
+        all_oceny = Ocena.objects.filter(film=obj.id).values('wartosc')
+        oceny=[ocena['wartosc']for ocena in all_oceny]
+        if len(all_oceny)>0:
+            sr=round(sum(oceny)/len(all_oceny), 2)
+        else:
+            sr=f'Ten film jeszcze nie został oceniony'
+        return sr
 
-        return f'Tu powinna byc srednia'
+
 
     def create(self, validated_data):
 
@@ -66,8 +49,4 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class OcenaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model=Ocena
-        fields=[
-            'user',
-            'film',
-            'wartosc'
-        ]
+        fields='__all__'
